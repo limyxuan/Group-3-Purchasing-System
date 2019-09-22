@@ -56,7 +56,7 @@ def fillingdeliveryorder(request):
 
     except PurchaseOrder.DoesNotExist:
 
-        context = { 'error': 'The quotation id is invalid !',
+        context = { 'error': 'Purchase Order ID invalid !',
                     'title': 'Delivery Order Form'
             }
         return render(request,'DeliveryOrder/deliveryorderform.html',context)
