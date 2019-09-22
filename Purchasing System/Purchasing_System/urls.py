@@ -3,6 +3,7 @@ Definition of urls for Purchasing_System.
 """
 
 from datetime import datetime
+from Purchasing_System import urls
 from django.conf.urls import url, include
 import django.contrib.auth.views
 from django.contrib import admin
@@ -17,10 +18,9 @@ import PurchaseOrder.views
 import DeliveryOrder.views
 import Invoice.views
 
-# Uncomment the next lines to enable the admin:
-# from django.conf.urls import include
-# from django.contrib import admin
-# admin.autodiscover()
+from django.conf.urls import include
+from django.contrib import admin
+admin.autodiscover()
 
 urlpatterns = [
     # Examples:

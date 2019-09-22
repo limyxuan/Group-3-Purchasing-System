@@ -1,5 +1,4 @@
 from django.shortcuts import render
-
 from django.contrib.auth import authenticate, login, logout
 from PurchaseRequisition.models import PurchaseRequisition, PurchaseRequisitionItem
 from app.models import Person,Item
@@ -21,7 +20,7 @@ import random
 import datetime 
 
 
-@login_required
+@login_required()
 def purchaserequisitionform(request):
     
     pr_id = random.randint(10000000,99999999)
