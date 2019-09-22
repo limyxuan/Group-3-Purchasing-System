@@ -20,7 +20,6 @@ from decimal import Decimal
 import random
 import datetime 
 
-
 @login_required
 def purchaserequisitionform(request):
     

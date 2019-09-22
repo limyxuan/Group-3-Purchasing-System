@@ -40,25 +40,36 @@ def fillingquotation(request):
     quo_id = random.randint(1000000,9999999)
     user_id  = request.user.id
     staff = Person.objects.get(user_id = user_id)
+
     try: 
-        request_for_quotations = RequestForQuotation.objects.get(request_for_quotation_id = re_of_quo_id)
-        item_list = RequestForQuotationItem.objects.filter(request_for_quotation_id = re_of_quo_id)
-        context = {
-                'title': 'Quotation Form',
-                'quotation_id': 'QUO' + str(quo_id),
-                'request_for_quotation_id': re_of_quo_id, 
-                'staff_id' : staff.person_id,
-                'vendor_id': request_for_quotations.vendor_id.vendor_id,
-                'rows':item_list
+        quotation = Quotation.objects.get(request_for_quotation_id = re_of_quo_id)
+        print(quotation)
+        context = { 'error': 'The Quotation is already Issued! Quotation Number: ' + quotation.quotation_id, 
+                   'title': 'Quotation Form'
             }
-        return render(request,'Quotation/quotationform.html',context)
+        return render(request,'Quotation/Quotationform.html',context)
+    except Quotation.DoesNotExist:
+        try: 
+            request_for_quotations = RequestForQuotation.objects.get(request_for_quotation_id = re_of_quo_id)
+            item_list = RequestForQuotationItem.objects.filter(request_for_quotation_id = re_of_quo_id)
+            context = {
+                    'title': 'Quotation Form',
+                    'quotation_id': 'QUO' + str(quo_id),
+                    'request_for_quotation_id': re_of_quo_id, 
+                    'staff_id' : staff.person_id,
+                    'vendor_id': request_for_quotations.vendor_id.vendor_id,
+                    'rows':item_list
+                }
+            return render(request,'Quotation/quotationform.html',context)
 
-    except RequestForQuotation.DoesNotExist:
+        except RequestForQuotation.DoesNotExist:
 
-        context = { 'error': 'The request for quotation id is invalid !',
-                    'title': 'Quotation Form'
-            }
-        return render(request,'Quotation/quotationform.html',context)
+            context = { 'error': 'The request for quotation id is invalid !',
+                        'title': 'Quotation Form'
+                }
+            return render(request,'Quotation/quotationform.html',context)
+
+    
 
 def quotationconfirmation(request):
 
