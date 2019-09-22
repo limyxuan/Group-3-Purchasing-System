@@ -157,10 +157,10 @@ def invoicedetails(request):
     context = {}
     inv_id = request.POST['invoice_id']
     purchase_order_id = request.POST['purchase_order_id']
-    staff_id = request.POST['staff_id']
+    staff_id = request.user.id 
     vendor_id = request.POST['vendor_id']
     description = request.POST['description']
-    purchaseorder = get_object_or_404(PurchaseOrder)
+    purchaseorder = PurchaseOrder.objects.get(purchase_order_id = purchase_order_id)
     staff_info = Person.objects.get(user_id = staff_id)
     vendor_info = Vendor.objects.get(vendor_id = vendor_id)
 
