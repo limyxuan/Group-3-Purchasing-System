@@ -20,7 +20,7 @@ import random
 import datetime 
 
 
-@login_required()
+@login_required
 def purchaserequisitionform(request):
     
     pr_id = random.randint(10000000,99999999)
