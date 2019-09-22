@@ -44,7 +44,7 @@ def fillingquotation(request):
     try: 
         quotation = Quotation.objects.get(request_for_quotation_id = re_of_quo_id)
         print(quotation)
-        context = { 'error': 'The Quotation is already Issued! Quotation Number: ' + quotation.quotation_id, 
+        context = { 'error': 'The Quotation is already Issued! The existed Quotation Number: ' + quotation.quotation_id, 
                    'title': 'Quotation Form'
             }
         return render(request,'Quotation/Quotationform.html',context)
