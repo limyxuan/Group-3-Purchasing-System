@@ -18,12 +18,12 @@
             <div class="col">
                 <label class="labelpodetails fontlabel">Company Information</label>
               <textarea type="text" class="infobox" name="staff_info" readonly>{{staff.person_name}} &#13;&#10;{{staff.person_address}} &#13;&#10;{{staff.person_phone_number}}</textarea>
-                <input type="text" class="hideinfo" name="staff_id" value="{{staff.id}}">
+                <input type="text" class="hideinfo" name="staff_id" value="{{staff.id}}" readonly>
             </div>
             <div class="col">
                 <label class="labelpodetails fontlabel">Vendor Information</label>
               <textarea type="text" class="infobox" name="vendor_info" value="{{vendor_info.vendor_id}}" readonly>{{vendor_info.vendor_name}} &#13;&#10;{{vendor_info.vendor_address}} &#13;&#10;{{vendor_info.vendor_phone_number}}</textarea>
-              <input type="text" class="hideinfo" name="vendor_id" value="{{vendor_info.vendor_id}}">
+              <input type="text" class="hideinfo" name="vendor_id" value="{{vendor_info.vendor_id}}" readonly>
             </div>
         </div>
 
