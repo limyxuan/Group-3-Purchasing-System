@@ -27,43 +27,55 @@ import datetime
  
 @login_required
 def requestforquotationform(request):
+    print(request.body)
+    #prid_quo = request.GET['prid_quo']    
+    
     context = {
-            'title':'Request For Quotation Form'
-        }
+            'title':'Request For Quotation Form',
+            'prid_quo': prid_quo
+            }
     context['user'] = request.user
 
     return render(request,'RequestForQuotation/requestforquotationform.html',context)
 
 @login_required
-
 def fillingrequestforquotation(request):
 
     context = {}
-    pr_id = request.GET['pr_id']
-    rfq_id = random.randint(1000000,9999999)
-    staff_id = request.user.id
-    staff_info = Person.objects.get(user_id = staff_id)
 
     try: 
-       
-        purchase_requisition = PurchaseRequisition.objects.get(pr_id = pr_id)
-        item_list = PurchaseRequisitionItem.objects.filter(pr_id = pr_id)
-        context = {
-                'title': 'Request For Quotation Form',
-                'request_for_quotation_id': 'RFQ' + str(rfq_id),
-                'purchase_requisition_id': pr_id, 
-                'staff_id' : staff_info.person_id,
-                'rows':item_list
+        pr_id = request.GET['prid_quo']
+        rfq_id = random.randint(1000000,9999999)
+        staff_id = request.user.id
+        staff_info = Person.objects.get(user_id = staff_id)
+        
+        try:
+            request_quo = RequestForQuotation.objects.get(purchase_requisition_id = pr_id)
+            print(request_quo)
+            context = { 'error': 'The Purchase Requisition is already Issued! ', 
+                        'title': 'Request For Quotation Form'
             }
-
-        return render(request,'RequestForQuotation/requestforquotationform.html',context)
-
-    except PurchaseRequisition.DoesNotExist:
-
-        context = { 'error': 'The Purchase Requisition id is invalid !',
-                    'title': 'Request For Quotation Form'
-            }
-        return render(request,'RequestForQuotation/requestforquotationform.html',context)
+            return render(request,'RequestForQuotation/requestforquotationform.html',context)
+        except RequestForQuotation.DoesNotExist:
+            try: 
+                    purchase_requisition = PurchaseRequisition.objects.get(pr_id = pr_id)
+                    item_list = PurchaseRequisitionItem.objects.filter(pr_id = pr_id)
+                    context = {
+                        'title': 'Request For Quotation Form',
+                        'request_for_quotation_id': 'RFQ' + str(rfq_id),
+                        'purchase_requisition_id': pr_id, 
+                        'staff_id' : staff_info.person_id,
+                        'rows':item_list
+                    }
+                    return render(request,'RequestForQuotation/requestforquotationform.html',context)
+            except PurchaseRequisition.DoesNotExist:
+                    context = { 'error': 'The Purchase Requisition id is invalid !',
+                                'title': 'Request For Quotation Form'   
+                               }
+                    return render(request,'RequestForQuotation/requestforquotationform.html',context)
+    except:
+        prid_list = PurchaseRequisition.objects.all()
+        print(request.body)
 
 def requestforquotationconfirmation(request):
 

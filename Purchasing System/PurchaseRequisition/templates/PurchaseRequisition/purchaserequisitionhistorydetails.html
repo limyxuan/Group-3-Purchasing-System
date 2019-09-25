@@ -55,14 +55,13 @@
               </tr>
           </tfoot>
         </table>
-        <div class="margintop">
-            <button type="submit" class="btn btn-info buttonsize">Close</button>
-            <a href="purchaserequisitionhistory.html" class="btn btn-info buttonsize">Back</a>
-            <a href="#" class="btn btn-info buttonsize">Delete</a>
-            <a href="#" class="pull-right btn btn-default">Record Quotation</a>
-        </div>
-
-
+    </form>
+    
+    <form class="btn" action='requestforquotationform' method='GET'>
+        <a href="/menu" class="btn btn-info buttonsize">CLOSE</a>
+        <a href="purchaserequisitionhistory.html" class="btn btn-info buttonsize">Back</a>
+        {% csrf_token %}
+        <button type="submit" class="pull-right btn btn-default" name="prid_quo" value="{{purchase_requisition_id}}">Request Quotation</button><br />
     </form>
 
 </div>
