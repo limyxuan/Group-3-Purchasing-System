@@ -7,10 +7,15 @@
           <input type="text" class="form-control" name="prid_quo" placeholder="Purchase Requisition ID" aria-label="Purchase Requisition ID"
             aria-describedby="button-addon2" value="{{prid_quo}}">
           <div class="input-group-append">
-           <button type="submit" class="btn btn-outline-info btn-hover btn-rounded waves-effect">Find</button>
+            <button type="submit" class="btn btn-outline-info btn-hover btn-rounded waves-effect">Find</button>
           </div>
         </div>
     </form>
+
+    <form class="margintop" action='purchaserequisitionhistory' method='GET'>
+        <button type="submit" class="btn btn-outline-info waves-effect">View Purchase Requisition</button><br />
+    </form>
+
     <p>{{error}}</p>
 
     <form class="purchaseordersubmission" action="requestforquotationconfirmation" method="POST">
