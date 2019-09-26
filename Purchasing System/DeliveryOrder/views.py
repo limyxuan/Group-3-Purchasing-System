@@ -161,7 +161,7 @@ def deliveryorderdetails(request):
     vendor_id = request.POST['vendor_id']
     description = request.POST['description']
     po = PurchaseOrder.objects.get(purchase_order_id = po_id)
-    staff_info = Person.objects.get(person_id = staff_id)
+    staff_info = Person.objects.get(user_id = staff_id)
     vendor_info = Vendor.objects.get(vendor_id = vendor_id)
 
     responses = request.read()
