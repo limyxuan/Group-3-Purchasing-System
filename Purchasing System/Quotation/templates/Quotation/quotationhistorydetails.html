@@ -70,15 +70,18 @@
                 </tr>
             </tfoot>
         </table>
-        <div class="margintop">
-            <button type="submit" class="btn btn-info buttonsize">Close</button>
+       </form>
+
+        <form class="btn" action='purchaseorderform' method='GET'>
+            <a href="/menu" class="btn btn-info buttonsize">CLOSE</a>
             <a href="quotationhistory.html" class="btn btn-info buttonsize">Back</a>
-            <a href="#" class="btn btn-info buttonsize">Delete</a>
-            <a href="#" class="pull-right btn btn-default">Issue Purchase Order</a>
-        </div>
+            {% csrf_token %}
+            <button type="submit" class="pull-right btn btn-default" name="quo_id" value="{{quotation_id}}">Issue Purchase Order</button>
+            <br>
+        </form>
 
 
-    </form>
+ 
 
 </div>
 

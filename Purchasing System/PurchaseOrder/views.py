@@ -29,10 +29,19 @@ from django.conf import settings
 
 @login_required
 def purchaseorderform(request):
-    context = {
-            'title':'Purchase Order Form'
-        }
-
+  
+    print(request.body)
+    try:
+        quo_id = request.GET['quo_id']    
+    
+        context = {
+                'title':'Purchase Order Form',
+                'quo_id': quo_id
+                }
+    except:  
+        context = {
+                'title':'Purchase Order Form',
+                }
     return render(request,'PurchaseOrder/purchaseorderform.html',context)
 
 
