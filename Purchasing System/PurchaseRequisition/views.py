@@ -72,6 +72,7 @@ def purchaserequisitionconfirmation(request):
 
     while i < items_length:
         total= Decimal(quantity[i]) * Decimal(unit_price[i])
+        
         item_table = {
             'item_name': items_name[i],
             'item_id': items_id[i],
