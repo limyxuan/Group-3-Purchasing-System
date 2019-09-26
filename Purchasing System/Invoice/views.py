@@ -24,51 +24,65 @@ import datetime
 
 @login_required
 def invoiceform(request):
-    context = {
+    print(request.body)
+    try:
+        pur_id = request.GET['pur_id']
+        print(pur_id)
+        context = {
+            'title':'INVOICE AND PAYMENT FORM',
+            'pur_id': pur_id
+        }
+        context['user'] = request.user
+    
+    except:
+        context = {
             'title':'INVOICE AND PAYMENT FORM'
         }
-    context['user'] = request.user
-
+        context['user'] = request.user
     return render(request,'Invoice/invoiceform.html',context)
 
 
 @login_required
 def fillinginvoice(request):
 
-    #global responsesItems
     context = {}
-    pur_id = request.GET['pur_id']
-    inv_id = random.randint(1000000,9999999)
+
+    try:
+        pur_id = request.GET['pur_id']
+        inv_id = random.randint(1000000,9999999)
+        staff_id = request.user.id
+        staff_info = Person.objects.get(user_id = staff_id)   
     
-    try: 
-
-        invoice = Invoice.objects.get(purchase_order_id = pur_id)
-        print(invoice)
-
-        context = { 'error': 'The Invoice is already Issued! Invoice Number: ' + invoice.invoice_id,
-                    'title': 'Invoice Form'
-            }
-        return render(request,'Invoice/Invoiceform.html',context)
-    except Invoice.DoesNotExist: 
         try: 
-            purchase_orders = PurchaseOrder.objects.get(purchase_order_id = pur_id)
-            item_list = PurchaseOrderItem.objects.filter(purchase_order_id = pur_id)
-            context = {
-                'title': 'Invoice Form',
-                'invoice_id': 'INV' + str(inv_id),
-                'purchase_order_id': pur_id, 
-                'staff_id' : purchase_orders.person_id.person_id,
-                'vendor_id': purchase_orders.vendor_id.vendor_id,
-                'rows':item_list
+            purchase_order = PurchaseOrder.objects.get(purchase_order_id = pur_id)
+            print(purchase_order)
+            context = { 
+                'error': 'The Invoice is already Issued! Invoice Number: ' + invoice.invoice_id,
+                'title': 'Invoice Form'
             }
-            #responsesItems = render(request,'Invoice/invoiceform.html',context).content
-            return render(request,'Invoice/invoiceform.html',context)
-        except PurchaseOrder.DoesNotExist:
-            context = { 'error': 'The Purchase Order id is invalid !',
-                        'title': 'Invoice Form'
+            return render(request,'Invoice/Invoiceform.html',context)
+        except Invoice.DoesNotExist: 
+            try: 
+                purchase_orders = PurchaseOrder.objects.get(purchase_order_id = pur_id)
+                item_list = PurchaseOrderItem.objects.filter(purchase_order_id = pur_id)
+                context = {
+                    'title': 'Invoice Form',
+                    'invoice_id': 'INV' + str(inv_id),
+                    'purchase_order_id': pur_id, 
+                    'staff_id' : staff_info.person_id,
+                    'vendor_id': purchase_orders.vendor_id.vendor_id,
+                    'rows':item_list
                 }
-            return render(request,'Invoice/invoiceform.html',context)
-        
+                return render(request,'Invoice/invoiceform.html',context)
+            except PurchaseOrder.DoesNotExist:
+                context = { 
+                    'error': 'The Purchase Order id is invalid !',
+                    'title': 'Invoice Form'
+                }
+                return render(request,'Invoice/invoiceform.html',context)
+    except:
+        context = {}          
+        return render(request,'Invoice/invoiceform.html',context)
     
 
 def invoiceconfirmation(request):

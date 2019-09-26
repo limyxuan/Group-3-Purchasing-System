@@ -23,11 +23,21 @@ import datetime
 
 @login_required
 def deliveryorderform(request):
-    context = {
-            'title':'Delivery Order Form'
+    print (request.body) 
+    try: 
+        pur_id = request.GET['pur_id']
+        print(pur_id)
+        context = {
+            'title':'Delivery Order Form',
+            'pur_id': pur_id
         }
-    context['user'] = request.user
+        context['user'] = request.user
 
+    except: 
+        context = {
+            'title':'Delivery Order Form'
+            }
+        context['user'] = request.user 
     return render(request,'DeliveryOrder/deliveryorderform.html',context)
 
 
@@ -35,39 +45,44 @@ def deliveryorderform(request):
 def fillingdeliveryorder(request):
 
     context = {}
-    pur_id = request.GET['pur_id']
-    do_id = random.randint(10000000,99999999)
-    user_id = request.user.id
-    staff = Person.objects.get(user_id = user_id)
-
+    
     try: 
+        pur_id = request.GET['pur_id']
+        do_id = random.randint(10000000,99999999)
+        staff_id = request.user.id
+        staff_info = Person.objects.get(user_id = staff_id)
 
-        delivery_order = DeliveryOrder.objects.get(purchase_order_id = pur_id)
-        print(delivery_order)
-
-        context = { 'error': 'The Delivery Order is already Issued! Delivery Order Number: ' + delivery_order.delivery_order_id,
-                    'title': 'Delivery Order Form'
-            }
-        return render(request,'DeliveryOrder/deliveryorderform.html',context)
-    except DeliveryOrder.DoesNotExist: 
         try: 
-            purchase_orders = PurchaseOrder.objects.get(purchase_order_id = pur_id)
-            item_list = PurchaseOrderItem.objects.filter(purchase_order_id = pur_id)
+            purchase_order = PurchaseOrder.objects.get(purchase_order_id = pur_id)
+            print(purchase_order)
             context = {
-                'title': 'Delivery Order Form',
-                'delivery_order_id': 'DO' + str(do_id),
-                'purchase_order_id': pur_id, 
-                'staff_id' : purchase_orders.person_id.person_id,
-                'vendor_id': purchase_orders.vendor_id.vendor_id,
-                'rows':item_list
-            }
-            return render(request,'DeliveryOrder/deliveryorderform.html',context) 
-
-        except PurchaseOrder.DoesNotExist:
-            context = { 'error': 'The Purchase Order id is invalid !',
-                        'title': 'Delivery Order Form'
+                'error': 'The Delivery Order is already Issued!',
+                'title': 'Delivery Order Form'
                 }
             return render(request,'DeliveryOrder/deliveryorderform.html',context)
+        except DeliveryOrder.DoesNotExist: 
+            try: 
+                purchase_order = PurchaseOrder.objects.get(purchase_order_id = pur_id)
+                item_list = PurchaseOrderItem.objects.filter(purchase_order_id = pur_id)
+                context = {
+                    'title': 'Delivery Order Form',
+                    'delivery_order_id': 'DO' + str(do_id),
+                    'purchase_order_id': pur_id, 
+                    'staff_id' : staff_info.person_id,
+                    'vendor_id': purchase_orders.vendor_id.vendor_id,
+                    'rows':item_list
+                    }
+                return render(request,'DeliveryOrder/deliveryorderform.html',context)
+            except PurchaseOrder.DoesNotExist: 
+                context = {
+                'error': 'The Purchase Order id is invalid !',
+                'title': 'Delivery Order Form'
+                }
+                return render(request,'DeliveryOrder/deliveryorderform.html',context)
+    except: 
+        context = {}
+        return render(request,'DeliveryOrder/deliveryorderform.html',context)
+
 
 
 

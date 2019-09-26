@@ -71,11 +71,18 @@
               </tr>
           </tfoot>
         </table>
-        <div class="margintop">
-            <button type="submit" class="btn btn-info buttonsize">Close</button>
-        </div>
+     </form> 
 
+    <form class="btn" action='deliveryorderform' method='GET'>
+        <a href="/menu" class="btn btn-info buttonsize">CLOSE</a>
+        <a href="deliveryorderhistory.html" class="btn btn-info buttonsize">Back</a>
+        {% csrf_token %}
+        <button type="submit" class="pull-right btn btn-default" name="pur_id" value="{{purchase_order_id}}">Record Delivery Order</button><br>
+    </form>
 
+    <form class="btn" action='invoiceform' method='GET'>
+        {% csrf_token %} 
+        <button type="submit" class="pull-right btn btn-default" name="pur_id" value="{{purchase_order_id}}">Record Invoice</button><br>
     </form>
 
 </div>
