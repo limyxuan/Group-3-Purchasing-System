@@ -223,4 +223,3 @@ def purchaserequisitionhistory(request):
             'rows':purchase_requisitions
         }
     return render(request,'PurchaseRequisition/purchaserequisitionhistory.html',context)
-
