@@ -60,6 +60,8 @@ def fillingquotation(request):
             }
         return render(request,'Quotation/quotationform.html',context)
 
+
+
 def quotationconfirmation(request):
 
     context = {}
