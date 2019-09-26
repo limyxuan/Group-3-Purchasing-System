@@ -28,13 +28,19 @@ import datetime
 @login_required
 def requestforquotationform(request):
     print(request.body)
-    prid_quo = request.GET['prid_quo']    
+    try:
+        prid_quo = request.GET['prid_quo']    
     
-    context = {
-            'title':'Request For Quotation Form',
-            'prid_quo': prid_quo
-            }
-    context['user'] = request.user
+        context = {
+                'title':'Request For Quotation Form',
+                'prid_quo': prid_quo
+                }
+        context['user'] = request.user
+    except:  
+        context = {
+                'title':'Request For Quotation Form',
+                }
+        context['user'] = request.user
 
     return render(request,'RequestForQuotation/requestforquotationform.html',context)
 
