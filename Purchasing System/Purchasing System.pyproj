@@ -82,6 +82,11 @@
     <Compile Include="RequestForQuotation\apps.py" />
     <Compile Include="RequestForQuotation\migrations\__init__.py" />
     <Compile Include="RequestForQuotation\models.py" />
+    <Compile Include="pyperclip-1.7.0\docs\conf.py" />
+    <Compile Include="pyperclip-1.7.0\setup.py" />
+    <Compile Include="pyperclip-1.7.0\src\pyperclip\__init__.py" />
+    <Compile Include="pyperclip-1.7.0\src\pyperclip\__main__.py" />
+    <Compile Include="pyperclip-1.7.0\tests\test_pyperclip.py" />
     <Compile Include="RequestForQuotation\tests.py" />
     <Compile Include="RequestForQuotation\views.py" />
     <Compile Include="RequestForQuotation\__init__.py" />
@@ -119,6 +124,12 @@
     <Folder Include="Quotation\templates\Quotation\" />
     <Folder Include="RequestForQuotation\" />
     <Folder Include="RequestForQuotation\migrations\" />
+    <Folder Include="pyperclip-1.7.0\" />
+    <Folder Include="pyperclip-1.7.0\docs\" />
+    <Folder Include="pyperclip-1.7.0\src\" />
+    <Folder Include="pyperclip-1.7.0\src\pyperclip.egg-info\" />
+    <Folder Include="pyperclip-1.7.0\src\pyperclip\" />
+    <Folder Include="pyperclip-1.7.0\tests\" />
     <Folder Include="RequestForQuotation\templates\" />
     <Folder Include="RequestForQuotation\templates\RequestForQuotation\" />
   </ItemGroup>
@@ -155,6 +166,18 @@
     <Content Include="Quotation\templates\Quotation\quotationform.html" />
     <Content Include="Quotation\templates\Quotation\quotationhistory.html" />
     <Content Include="Quotation\templates\Quotation\quotationhistorydetails.html" />
+    <Content Include="pyperclip-1.7.0\docs\index.rst" />
+    <Content Include="pyperclip-1.7.0\docs\introduction.rst" />
+    <Content Include="pyperclip-1.7.0\docs\make.bat" />
+    <Content Include="pyperclip-1.7.0\docs\Makefile" />
+    <Content Include="pyperclip-1.7.0\MANIFEST.in" />
+    <Content Include="pyperclip-1.7.0\PKG-INFO" />
+    <Content Include="pyperclip-1.7.0\README.md" />
+    <Content Include="pyperclip-1.7.0\setup.cfg" />
+    <Content Include="pyperclip-1.7.0\src\pyperclip.egg-info\dependency_links.txt" />
+    <Content Include="pyperclip-1.7.0\src\pyperclip.egg-info\PKG-INFO" />
+    <Content Include="pyperclip-1.7.0\src\pyperclip.egg-info\SOURCES.txt" />
+    <Content Include="pyperclip-1.7.0\src\pyperclip.egg-info\top_level.txt" />
     <Content Include="RequestForQuotation\templates\RequestForQuotation\index.html" />
     <Content Include="RequestForQuotation\templates\RequestForQuotation\requestforquotationconfirmation.html" />
     <Content Include="RequestForQuotation\templates\RequestForQuotation\requestforquotationdetails.html" />
