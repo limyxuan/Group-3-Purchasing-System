@@ -41,23 +41,24 @@ def fillingdeliveryorder(request):
     staff = Person.objects.get(user_id = user_id)
 
     try: 
-        delivery_order = Invoice.objects.get(purchase_order_id = pur_id)
+
+        delivery_order = DeliveryOrder.objects.get(purchase_order_id = pur_id)
         print(delivery_order)
 
-        context = { 'error': 'The Delivery Order is already Issued! Purchase Order Number: ' + delivery_order.do_id,
+        context = { 'error': 'The Delivery Order is already Issued! Delivery Order Number: ' + delivery_order.delivery_order_id,
                     'title': 'Delivery Order Form'
             }
         return render(request,'DeliveryOrder/deliveryorderform.html',context)
     except DeliveryOrder.DoesNotExist: 
         try: 
-            po = PurchaseOrder.objects.get(purchase_order_id = pur_id)
+            purchase_orders = PurchaseOrder.objects.get(purchase_order_id = pur_id)
             item_list = PurchaseOrderItem.objects.filter(purchase_order_id = pur_id)
             context = {
                 'title': 'Delivery Order Form',
-                'delivery_order_id': 'PO' + str(do_id),
+                'delivery_order_id': 'DO' + str(do_id),
                 'purchase_order_id': pur_id, 
-                'staff_id' : staff.person_id,
-                'vendor_id': po.vendor_id.vendor_id,
+                'staff_id' : purchase_orders.person_id.person_id,
+                'vendor_id': purchase_orders.vendor_id.vendor_id,
                 'rows':item_list
             }
             return render(request,'DeliveryOrder/deliveryorderform.html',context) 

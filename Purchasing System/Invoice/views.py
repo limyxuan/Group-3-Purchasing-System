@@ -45,7 +45,7 @@ def fillinginvoice(request):
         invoice = Invoice.objects.get(purchase_order_id = pur_id)
         print(invoice)
 
-        context = { 'error': 'The Invoice is already Issued! Purchase Order Number: ' + invoice.invoice_id,
+        context = { 'error': 'The Invoice is already Issued! Invoice Number: ' + invoice.invoice_id,
                     'title': 'Invoice Form'
             }
         return render(request,'Invoice/Invoiceform.html',context)
