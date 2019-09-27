@@ -10,9 +10,9 @@ class DeliveryOrder(models.Model):
     time_created = models.DateTimeField()
     description = models.TextField(null=True,default=None, blank=True)
     total_price = models.DecimalField(max_digits=10, decimal_places=2, default=Decimal('0.00'))
+    purchase_order_id =models.OneToOneField(PurchaseOrder,on_delete = models.CASCADE)
     person_id = models.ForeignKey(Person)
     vendor_id = models.ForeignKey(Vendor)
-    purchase_order_id = models.OneToOneField(PurchaseOrder)
     def __str__(self):
         return str(self.delivery_order_id)
 

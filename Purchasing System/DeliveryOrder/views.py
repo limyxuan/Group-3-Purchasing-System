@@ -23,21 +23,10 @@ import datetime
 
 @login_required
 def deliveryorderform(request):
-    print (request.body) 
-    try: 
-        pur_id = request.GET['pur_id']
-        print(pur_id)
-        context = {
-            'title':'Delivery Order Form',
-            'pur_id': pur_id
+    context = {
+        'title':'Delivery Order Form'
         }
-        context['user'] = request.user
-
-    except: 
-        context = {
-            'title':'Delivery Order Form'
-            }
-        context['user'] = request.user 
+    context['user'] = request.user
     return render(request,'DeliveryOrder/deliveryorderform.html',context)
 
 
@@ -45,44 +34,38 @@ def deliveryorderform(request):
 def fillingdeliveryorder(request):
 
     context = {}
-    
-    try: 
-        pur_id = request.GET['pur_id']
-        do_id = random.randint(10000000,99999999)
-        staff_id = request.user.id
-        staff_info = Person.objects.get(user_id = staff_id)
+    pur_id = request.GET['pur_id']
+    do_id = random.randint(10000000,99999999)
+    staff_id = request.user.id
+    staff_info = Person.objects.get(user_id = staff_id)
 
+    try: 
+        delivery_order = DeliveryOrder.objects.get(purchase_order_id = pur_id)
+        print(delivery_order)
+        context = {
+            'error': 'The Delivery Order is already Issued! Delivery Order Number: ' + delivery_order.delivery_order_id, 
+            'title': 'Delivery Order Form'
+            }
+        return render(request,'DeliveryOrder/deliveryorderform.html',context)
+    except DeliveryOrder.DoesNotExist: 
         try: 
-            purchase_order = PurchaseOrder.objects.get(purchase_order_id = pur_id)
-            print(purchase_order)
+            purchase_orders = PurchaseOrder.objects.get(purchase_order_id = pur_id) 
+            item_list = PurchaseOrderItem.objects.filter(purchase_order_id = pur_id) 
             context = {
-                'error': 'The Delivery Order is already Issued!',
+                'title': 'Delivery Order Form',
+                'delivery_order_id': 'DO' + str(do_id), 
+                'purchase_order_id': pur_id,  
+                'staff_id' : purchase_orders.person_id.person_id,
+                'vendor_id': purchase_orders.vendor_id.vendor_id, 
+                'rows':item_list
+                }
+            return render(request,'DeliveryOrder/deliveryorderform.html',context) 
+        except PurchaseOrder.DoesNotExist: 
+            context = {
+                'error': 'The Purchase Order id is invalid !', 
                 'title': 'Delivery Order Form'
                 }
             return render(request,'DeliveryOrder/deliveryorderform.html',context)
-        except DeliveryOrder.DoesNotExist: 
-            try: 
-                purchase_order = PurchaseOrder.objects.get(purchase_order_id = pur_id)
-                item_list = PurchaseOrderItem.objects.filter(purchase_order_id = pur_id)
-                context = {
-                    'title': 'Delivery Order Form',
-                    'delivery_order_id': 'DO' + str(do_id),
-                    'purchase_order_id': pur_id, 
-                    'staff_id' : staff_info.person_id,
-                    'vendor_id': purchase_orders.vendor_id.vendor_id,
-                    'rows':item_list
-                    }
-                return render(request,'DeliveryOrder/deliveryorderform.html',context)
-            except PurchaseOrder.DoesNotExist: 
-                context = {
-                'error': 'The Purchase Order id is invalid !',
-                'title': 'Delivery Order Form'
-                }
-                return render(request,'DeliveryOrder/deliveryorderform.html',context)
-    except: 
-        context = {}
-        return render(request,'DeliveryOrder/deliveryorderform.html',context)
-
 
 
 
@@ -90,7 +73,7 @@ def deliveryorderconfirmation(request):
 
     context = {}
     do_id = request.POST['delivery_order_id']
-    po_id = request.POST['purchase_order_id']
+    pur_id = request.POST['purchase_order_id']
     staff_id = request.user.id
     ven_id = request.POST['vendor_id']
     description = request.POST['description']
@@ -138,7 +121,7 @@ def deliveryorderconfirmation(request):
         vendor_info = Vendor.objects.get(vendor_id = ven_id) 
         context = {
             'title': 'Delivery Order Confirmation',
-            'purchase_order_id' : po_id,
+            'purchase_order_id' : pur_id,
             'delivery_order_id' : do_id,
             'staff_id' : staff_id,
             'vendor_id' : ven_id,
@@ -154,7 +137,7 @@ def deliveryorderconfirmation(request):
         context = {
             'error': 'Please insert valid vendor ID', 
             'title': 'Delivery Order Confirmation',
-            'purchase_order_id' : po_id,
+            'purchase_order_id' : pur_id,
             'delivery_order_id' : do_id,
             'staff_id' : staff_id,
             'shipping_inst' : shipping_inst,
@@ -170,12 +153,12 @@ def deliveryorderconfirmation(request):
 def deliveryorderdetails(request):
     context = {}
     do_id = request.POST['delivery_order_id']
-    po_id = request.POST['purchase_order_id']
+    purchase_order_id = request.POST['purchase_order_id']
     shipping_inst = request.POST['shipping_inst']
     staff_id = request.POST['staff_id']
     vendor_id = request.POST['vendor_id']
     description = request.POST['description']
-    po = PurchaseOrder.objects.get(purchase_order_id = po_id)
+    po = PurchaseOrder.objects.get(purchase_order_id = purchase_order_id)
     staff_info = Person.objects.get(user_id = staff_id)
     vendor_info = Vendor.objects.get(vendor_id = vendor_id)
 
@@ -245,7 +228,7 @@ def deliveryorderdetails(request):
     # info pass to html
     context = {
             'title': 'Delivery Order Details',
-            'purchase_order_id' : po_id,
+            'purchase_order_id' : purchase_order_id,
             'delivery_order_id' : do_id,
             'staff_id' : staff_id,
             'vendor_id' : vendor_id,
