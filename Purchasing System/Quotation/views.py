@@ -1,4 +1,6 @@
 from django.shortcuts import render
+import easy_install
+import django
 
 from django.contrib.auth import authenticate, login, logout
 from django.urls import reverse
@@ -18,17 +20,30 @@ from django.forms import formset_factory
 from django.http.request import QueryDict
 from decimal import Decimal
 import random
-import datetime 
+import datetime
+from prettytable import PrettyTable
+from django.core.mail import send_mail
+from django.conf import settings
 
 
 
 @login_required
 def quotationform(request):
-    context = {
+    print(request.body)
+
+    try:
+        re_quo_id = request.GET['re_quo_id']
+
+        context = {
+            'title':'Quotation Form',
+            're_quo_id': re_quo_id
+        }
+        context['user'] = request.user
+    except:
+        context = {
             'title':'Quotation Form'
         }
-    context['user'] = request.user
-
+        context['user'] = request.user
     return render(request,'Quotation/quotationform.html',context)
 
 
@@ -36,29 +51,43 @@ def quotationform(request):
 def fillingquotation(request):
 
     context = {}
-    re_of_quo_id = request.GET['re_of_quo_id']
-    quo_id = random.randint(1000000,9999999)
-    user_id  = request.user.id
-    staff = Person.objects.get(user_id = user_id)
-    try: 
-        request_for_quotations = RequestForQuotation.objects.get(request_for_quotation_id = re_of_quo_id)
-        item_list = RequestForQuotationItem.objects.filter(request_for_quotation_id = re_of_quo_id)
-        context = {
-                'title': 'Quotation Form',
-                'quotation_id': 'QUO' + str(quo_id),
-                'request_for_quotation_id': re_of_quo_id, 
-                'staff_id' : staff.person_id,
-                'vendor_id': request_for_quotations.vendor_id.vendor_id,
-                'rows':item_list
-            }
-        return render(request,'Quotation/quotationform.html',context)
+    re_quo_id = request.GET['re_quo_id']
 
-    except RequestForQuotation.DoesNotExist:
+    try:
+        quo_id = random.randint(1000000,9999999)
+        staff_id  = request.user.id
+        staff_info = Person.objects.get(user_id = staff_id)
 
-        context = { 'error': 'The request for quotation id is invalid !',
+        try: 
+            rec_quo = Quotation.objects.get(request_for_quotation_id = re_quo_id)
+            print(rec_quo)
+            context = {
+                'error': 'The Request For Quotation is already Record!',
+                'title': 'Quotation Form'
+                }
+            return render(request,'Quotation/quotationform.html',context)
+        except Quotation.DoesNotExist:
+            try:
+                request_for_quotation = RequestForQuotation.objects.get(request_for_quotation_id = re_quo_id)
+                item_list = RequestForQuotationItem.objects.filter(request_for_quotation_id = re_quo_id)
+                context = {
+                    'title': 'Quotation Form',
+                    'quotation_id': 'QUO' + str(quo_id),
+                    'request_for_quotation_id': re_quo_id, 
+                    'staff_id' : staff_info.person_id,
+                    'vendor_id': request_for_quotation.vendor_id.vendor_id,
+                    'rows':item_list
+                }
+                return render(request,'Quotation/quotationform.html',context)
+            except RequestForQuotation.DoesNotExist:
+                context = { 'error': 'The request for quotation id is invalid !',
                     'title': 'Quotation Form'
-            }
+                }
+            return render(request,'Quotation/quotationform.html',context)
+    except:
+        context = {'error': 'Hello'}
         return render(request,'Quotation/quotationform.html',context)
+
 
 def quotationconfirmation(request):
 

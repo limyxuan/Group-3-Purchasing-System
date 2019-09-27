@@ -5,9 +5,12 @@
     <form class="quotationfind" action="fillingrequestforquotation" method="GET">
         <div class="input-group mb-3">
           <input type="text" class="form-control" name="prid_quo" placeholder="Purchase Requisition ID" aria-label="Purchase Requisition ID"
-            aria-describedby="button-addon2" value="{{prid_quo}}" readonly>
+            aria-describedby="button-addon2" value="{{prid_quo}}">
+            <br></br>
           <div class="input-group-append">
-           <button type="submit" class="btn btn-outline-info btn-hover btn-rounded waves-effect">Find</button>
+              <a href="purchaserequisitionhistory.html" class="btn btn-info buttonsize">Select PR ID</a>
+              <button type="submit" class="btn btn-outline-info btn-hover btn-rounded waves-effect">Find</button>
+              <br></br>
           </div>
         </div>
     </form>

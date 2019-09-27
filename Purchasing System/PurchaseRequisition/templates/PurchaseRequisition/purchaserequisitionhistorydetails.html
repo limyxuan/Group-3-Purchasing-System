@@ -17,7 +17,7 @@
             </div>
         <div class="col">
               <label class="labelpodetails">Staff ID</label>
-              <textarea type="text" class="infobox" name="staff_info" readonly>{{staff_info.person_name}} &#13;&#10;{{staff_info.person_address}} &#13;&#10; {{staff_info.person_phone_number}}</textarea>
+              <textarea type="text" class="infobox" name="staff_info" rows="4" cols="18" readonly>{{staff_info.person_name}} &#13;&#10;{{staff_info.person_address}} &#13;&#10; {{staff_info.person_phone_number}}</textarea>
             </div>
 
         </div>
@@ -61,7 +61,7 @@
         <a href="/menu" class="btn btn-info buttonsize">CLOSE</a>
         <a href="purchaserequisitionhistory.html" class="btn btn-info buttonsize">Back</a>
         {% csrf_token %}
-        <button type="submit" class="pull-right btn btn-default" name="prid_quo" value="{{purchase_requisition_id}}">Request Quotation</button><br>
+        <button type="submit" class="pull-right btn btn-default" name="prid_quo" value="{{purchase_requisition_id}}">Request For Quotation</button><br>
     </form>
 
 </div>
