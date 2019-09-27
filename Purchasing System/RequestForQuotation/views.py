@@ -80,8 +80,8 @@ def fillingrequestforquotation(request):
                                }
                     return render(request,'RequestForQuotation/requestforquotationform.html',context)
     except:
-        prid_list = PurchaseRequisition.objects.all()
-        print(request.body)
+            context = {}
+            return render(request,'RequestForQuotation/requestforquotationform.html',context)
 
 def requestforquotationconfirmation(request):
 

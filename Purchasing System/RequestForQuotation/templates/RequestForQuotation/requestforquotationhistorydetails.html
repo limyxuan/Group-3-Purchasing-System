@@ -11,7 +11,7 @@
         <div class="row">
            <div class="col">
                 <label class="labelpodetails">Request Of Quotation ID</label>
-                <input type="text" class="form-control" name="request_of_quotation_id" value="{{request_for_quotation_id}}" readonly>{{request_of_quotation_id}}
+                <input type="text" class="form-control" name="request_for_quotation_id" value="{{request_for_quotation_id}}" readonly>
             </div>
             <div class="col">
                 <label class="labelpodetails">Purchase Requisition ID</label>
@@ -19,11 +19,11 @@
             </div>
             <div class="col">
                 <label class="labelpodetails">Company Information</label>
-              <textarea type="text" class="infobox" name="staff_info" readonly>{{staff_info.person_name}} &#13;&#10;{{staff_info.person_address}} &#13;&#10;{{staff_info.person_phone_number}}</textarea>
+              <textarea type="text" class="infobox" name="staff_info" rows="4" cols="18" readonly>{{staff_info.person_name}} &#13;&#10;{{staff_info.person_address}} &#13;&#10;{{staff_info.person_phone_number}}</textarea>
             </div>
             <div class="col">
                 <label class="labelpodetails">Vendor Information</label>
-              <textarea type="text" class="infobox" name="vendor_info"  readonly>{{vendor_info.vendor_name}} &#13;&#10;{{vendor_info.vendor_address}} &#13;&#10;{{vendor_info.vendor_phone_number}}</textarea>
+              <textarea type="text" class="infobox" name="vendor_info"  rows="4" cols="18" readonly>{{vendor_info.vendor_name}} &#13;&#10;{{vendor_info.vendor_address}} &#13;&#10;{{vendor_info.vendor_phone_number}}</textarea>
             </div>
         </div>
         <div class="row margintop">
@@ -65,14 +65,12 @@
               </tr>
           </tfoot>
         </table>
-        <div class="margintop">
-            <button type="submit" class="btn btn-info buttonsize">Close</button>
-            <a href="requestforquotationhistory.html" class="btn btn-info buttonsize">Back</a>
-            <a href="#" class="btn btn-info buttonsize">Delete</a>
-            <a href="#" class="pull-right btn btn-default">Record Quotation</a>
-        </div>
-
-
+    </form>
+        <form class="btn" action='quotationform' method='GET'>
+        <a href="/menu" class="btn btn-info buttonsize">CLOSE</a>
+        <a href="requestforquotationhistory.html" class="btn btn-info buttonsize">Back</a>
+        {% csrf_token %}
+        <button type="submit" class="pull-right btn btn-default" name="re_quo_id" value="{{request_for_quotation_id}}">Record Quotation</button><br>
     </form>
 
 </div>

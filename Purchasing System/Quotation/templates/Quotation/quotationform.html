@@ -5,14 +5,15 @@
     <form class="quotationfind" action="fillingquotation" method="get">
 
         <div class="input-group mb-3">
-            <input type="text" class="form-control" name="re_of_quo_id" id="re_of_quo_id" placeholder="Request For Quotation ID" aria-label="Request For Quotation ID"
-                   aria-describedby="button-addon2">
+            <input type="text" class="form-control" name="re_quo_id" id="re_quo_id" placeholder="Request For Quotation ID" aria-label="Request For Quotation ID"
+                   aria-describedby="button-addon2" value="{{re_quo_id}}">
+                <br></br>
             <div class="input-group-append">
+                <a href="/requestforquotationhistory" class="btn btn-info buttonsize">Select RFQ ID</a>
                 <button type="submit" class="btn btn-outline-info btn-hover btn-rounded waves-effect">Find</button>
+               <br></br>
             </div>
         </div>
-
-
     </form>
     <p>{{error}}</p>
 
@@ -20,16 +21,16 @@
         {% csrf_token %}
         <div class="row margintop">
             <div class="col">
-                <input type="text" class="form-control" name="quotation_id" value="{{quotation_id}}" placeholder="Quotation ID">
+                <input type="text" class="form-control" name="quotation_id" value="{{quotation_id}}" placeholder="Quotation ID" readonly>
             </div>
             <div class="col">
-                <textarea type="text" class="poform-control" name="request_for_quotation_id" placeholder="Request For Quotation ID">{{request_for_quotation_id}}</textarea>
+                <textarea type="text" class="poform-control" name="request_for_quotation_id" placeholder="Request For Quotation ID" readonly>{{request_for_quotation_id}}</textarea>
             </div>
             <div class="col">
-                <textarea type="text" class="poform-control" name="staff_id" placeholder="Staff ID">{{staff_id}}</textarea>
+                <textarea type="text" class="poform-control" name="staff_id" placeholder="Staff ID" readonly>{{staff_id}}</textarea>
             </div>
             <div class="col">
-                <textarea type="text" class="poform-control" name="vendor_id" placeholder="Vendor ID">{{vendor_id}}</textarea>
+                <textarea type="text" class="poform-control" name="vendor_id" placeholder="Vendor ID" readonly>{{vendor_id}}</textarea>
             </div>
         </div>
 
